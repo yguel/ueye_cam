@@ -43,7 +43,8 @@
 
 #include "camera_parameters.hpp"
 
-namespace ueye_cam {
+namespace ueye_cam
+{
 
 
 #define CAP(val, min, max) \
@@ -67,14 +68,16 @@ namespace ueye_cam {
 /**
  * Thin wrapper for UEye camera API from IDS Imaging Development Systems GMBH.
  */
-class Driver {
+class Driver
+{
 public:
   constexpr static int ANY_CAMERA = 0;
 
   /**
    * Default constructor
    */
-  Driver() : Driver(ANY_CAMERA, "camera") {}
+  Driver()
+  : Driver(ANY_CAMERA, "camera") {}
 
   /**
    * Initializes member variables.
@@ -110,7 +113,7 @@ public:
    *
    * @throw runtime_error if an error occurs retrieving the information from the camera
    */
-  void loadCamConfig(const std::string& filename);
+  void loadCamConfig(const std::string & filename);
 
   /** @brief Export a UEye camera parameter configuration INI.
    *
@@ -118,7 +121,7 @@ public:
    *
    * @throw runtime_error if an error occurs exporting the configuration from the camera
    */
-  void saveCamConfig(const std::string& filename);
+  void saveCamConfig(const std::string & filename);
 
   /**
    * Updates current camera handle's color mode, udpate driver
@@ -133,7 +136,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setColorMode(std::string& mode, bool reallocate_buffer = true);
+  INT setColorMode(std::string & mode, bool reallocate_buffer = true);
 
   /**
    * Updates current camera handle's sensor resolution and area of interest.
@@ -153,8 +156,9 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setResolution(INT& image_width, INT& image_height, INT& image_left,
-      INT& image_top, bool update_driver_state = true);
+  INT setResolution(
+    INT & image_width, INT & image_height, INT & image_left,
+    INT & image_top, bool update_driver_state = true);
 
   /**
    * Updates current camera handle's subsampling rate.
@@ -166,7 +170,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setSubsampling(unsigned int& rate, bool reallocate_buffer = true);
+  INT setSubsampling(unsigned int & rate, bool reallocate_buffer = true);
 
   /**
    * Updates current camera handle's binning rate.
@@ -178,7 +182,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setBinning(unsigned int& rate, bool reallocate_buffer = true);
+  INT setBinning(unsigned int & rate, bool reallocate_buffer = true);
 
   /**
    * Updates current camera handle's internal image scaling rate.
@@ -190,7 +194,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setSensorScaling(double& rate, bool reallocate_buffer = true);
+  INT setSensorScaling(double & rate, bool reallocate_buffer = true);
 
   /**
    * Updates current camera handle's gain either to auto mode, or
@@ -209,19 +213,20 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setGain(bool& auto_gain, INT& master_gain_prc, INT& red_gain_prc,
-      INT& green_gain_prc, INT& blue_gain_prc, bool& gain_boost);
+  INT setGain(
+    bool & auto_gain, INT & master_gain_prc, INT & red_gain_prc,
+    INT & green_gain_prc, INT & blue_gain_prc, bool & gain_boost);
 
   /**
    * Updates current camera handle's software gamma to specified parameter.
    *
-   * According to ids this is only possible when the color mode is debayered by the ids driver 
+   * According to ids this is only possible when the color mode is debayered by the ids driver
    *
    * \param software_gamma gamma value in percentage
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setSoftwareGamma(INT& software_gamma);
+  INT setSoftwareGamma(INT & software_gamma);
 
   /**
    * Updates current camera handle's exposure / shutter either to auto mode, or
@@ -229,13 +234,13 @@ public:
    *
    * \param auto_exposure Updates camera's hardware auto shutter / auto shutter mode.
    *   Will be deactivated if camera does not support mode.
-   * \param auto_exposure_reference sets the reference value for the auto_exposure controller. 
+   * \param auto_exposure_reference sets the reference value for the auto_exposure controller.
    * \param exposure_ms Manual exposure setting, in ms. Valid value range depends on
    *   current camera pixel clock rate.
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setExposure(bool& auto_exposure, double& auto_exposure_reference, double& exposure_ms);
+  INT setExposure(bool & auto_exposure, double & auto_exposure_reference, double & exposure_ms);
 
   /**
    * Enables or disables the current camera handle's auto white balance mode, and
@@ -248,7 +253,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setWhiteBalance(bool& auto_white_balance, INT& red_offset, INT& blue_offset);
+  INT setWhiteBalance(bool & auto_white_balance, INT & red_offset, INT & blue_offset);
 
   /**
    * Updates current camera handle's frame rate either to auto mode, or
@@ -264,7 +269,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setFrameRate(bool& auto_frame_rate, double& frame_rate_hz);
+  INT setFrameRate(bool & auto_frame_rate, double & frame_rate_hz);
 
   /**
    * Updates current camera handle's pixel clock rate.
@@ -274,7 +279,7 @@ public:
    *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setPixelClockRate(INT& clock_rate_mhz);
+  INT setPixelClockRate(INT & clock_rate_mhz);
 
   /**
    * Updates the flash signal's delay (from start of exposure) and duration.
@@ -285,7 +290,7 @@ public:
    * Note that setting flash parameters by itself may not have an effect, if
    * the flash output is not enabled via is_IO().
    */
-  INT setFlashParams(INT& delay_us, UINT& duration_us);
+  INT setFlashParams(INT & delay_us, UINT & duration_us);
 
   /**
    * Sets the mode for the GPIO pins.
@@ -293,10 +298,10 @@ public:
    * \param mode for GPIO pin {0: input, 1: output low, 2: output high, 3: flash, 4: pwm output, 5: trigger input}.
    * \param pwm_freq frequency if pwm output is selected as the mode
    * \param pwm_duty_cycle duty cycle if pwm output is selected as the mode
-   * 
+   *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
-  INT setGpioMode(const INT& gpio, INT& mode, double& pwm_freq, double& pwm_duty_cycle);
+  INT setGpioMode(const INT & gpio, INT & mode, double & pwm_freq, double & pwm_duty_cycle);
 
   /**
    * Sets current camera to start capturing frames to internal buffer repeatedly.
@@ -321,8 +326,8 @@ public:
 
   /**
    * Sets current camera to external trigger mode, where a HI to LO or LO to HI
-   * falling-edge signal on the digital input pin of the camera will trigger 
-   * the camera to capture a frame. This function also resets the digital output 
+   * falling-edge signal on the digital input pin of the camera will trigger
+   * the camera to capture a frame. This function also resets the digital output
    * pin to always be LO.
    *
    * Note that this function only sets the mode. Frames are then grabbed by
@@ -371,61 +376,64 @@ public:
    *         WARNING: image buffer contents may change during capture, or may become
    *         invalid after calling other functions!
    */
-  const char* processNextFrame(UINT timeout_ms);
+  const char * processNextFrame(UINT timeout_ms);
 
-  inline bool isConnected() { return (cam_handle_ != HIDS(0)); }
+  inline bool isConnected() {return cam_handle_ != HIDS(0);}
 
-  inline bool freeRunModeActive() {
-    return ((cam_handle_ != HIDS(0)) &&
-        (is_SetExternalTrigger(cam_handle_, IS_GET_EXTERNALTRIGGER) == IS_SET_TRIGGER_OFF) &&
-        (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE));
+  inline bool freeRunModeActive()
+  {
+    return (cam_handle_ != HIDS(0)) &&
+           (is_SetExternalTrigger(cam_handle_, IS_GET_EXTERNALTRIGGER) == IS_SET_TRIGGER_OFF) &&
+           (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE);
   }
 
-  inline bool extTriggerModeActive() {
+  inline bool extTriggerModeActive()
+  {
     INT trigger_mode = is_SetExternalTrigger(cam_handle_, IS_GET_EXTERNALTRIGGER);
-    return ((cam_handle_ != HIDS(0)) &&
-        (trigger_mode == IS_SET_TRIGGER_HI_LO || trigger_mode == IS_SET_TRIGGER_LO_HI) &&
-        (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE));
+    return (cam_handle_ != HIDS(0)) &&
+           (trigger_mode == IS_SET_TRIGGER_HI_LO || trigger_mode == IS_SET_TRIGGER_LO_HI) &&
+           (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE);
   }
 
-  inline bool checkTriggerMode(INT trigger_mode) {
-    return ((cam_handle_ != HIDS(0)) &&
-        (is_SetExternalTrigger(cam_handle_, IS_GET_EXTERNALTRIGGER) == trigger_mode) &&
-        (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE));
+  inline bool checkTriggerMode(INT trigger_mode)
+  {
+    return (cam_handle_ != HIDS(0)) &&
+           (is_SetExternalTrigger(cam_handle_, IS_GET_EXTERNALTRIGGER) == trigger_mode) &&
+           (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE);
   }
 
-  inline bool isCapturing() {
-    return ((cam_handle_ != HIDS(0)) &&
-        (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE));
+  inline bool isCapturing()
+  {
+    return (cam_handle_ != HIDS(0)) &&
+           (is_CaptureVideo(cam_handle_, IS_GET_LIVE) == TRUE);
   }
 
-  const static char* err2str(INT error);              /**< Stringifies UEye API error flag. **/
-  const static char* colormode2str(INT mode);         /**< Stringifies UEye color mode flag. **/
+  const static char * err2str(INT error);              /**< Stringifies UEye API error flag. **/
+  const static char * colormode2str(INT mode);         /**< Stringifies UEye color mode flag. **/
   const static std::string colormode2img_enc(INT mode); /**< Translates UEye color mode flag to stringified image encoding.**/
   static INT colormode2bpp(INT mode);                 /**< Bits per pixel attribute of UEye color mode flag **/
   static bool isSupportedColorMode(INT mode);         /**< Check if this driver supports the chosen UEye color mode **/
-  static INT name2colormode(const std::string& name); /**< Translates string name to UEye color mode flag. **/
+  static INT name2colormode(const std::string & name); /**< Translates string name to UEye color mode flag. **/
   const static std::string colormode2name(INT mode);  /**< Translates UEye color mode flag to string name. **/
 
   /**
    * Returns the proper transfer function to translate and copy the camera format
    * pixel buffer either into an 8 or 16 bit unsigned int per channel format.
    */
-  const static std::function<void*(void*, void*, size_t)> getUnpackCopyFunc(INT color_mode);
-  static void* unpackRGB10(void* dst, void* src, size_t num);
-  static void* unpack10u(void* dst, void* src, size_t num);
-  static void* unpack12u(void* dst, void* src, size_t num);
+  const static std::function<void * (void *, void *, size_t)> getUnpackCopyFunc(INT color_mode);
+  static void * unpackRGB10(void * dst, void * src, size_t num);
+  static void * unpack10u(void * dst, void * src, size_t num);
+  static void * unpack12u(void * dst, void * src, size_t num);
 
   /**
    * Sets a timestamp indicating the moment of the image capture
    */
-  bool getTimestamp(UEYETIME *timestamp);
+  bool getTimestamp(UEYETIME * timestamp);
 
   /**
    * Sets a clock tick indicating the moment of the image capture
    */
-  bool getClockTick(uint64_t *tick);
-
+  bool getClockTick(uint64_t * tick);
 
 protected:
   /**
@@ -454,8 +462,8 @@ protected:
    *    std::invalid_argument if an individual parameter setting fails.
    */
   virtual void setCamParams(
-      CameraParameters &parameters,
-      const std::set<std::string>& filter = std::set<std::string>()
+    CameraParameters & parameters,
+    const std::set<std::string> & filter = std::set<std::string>()
   );
 
   /**
@@ -475,18 +483,18 @@ protected:
   /**
    * (Re-)allocates internal frame buffer after querying current
    * area of interest (resolution), and configures IDS driver to use this buffer.
-   * 
+   *
    * \return IS_SUCCESS if successful, error flag otherwise (see err2str).
    */
   INT reallocateCamBuffer();
 
-  const static std::map<std::string, INT> COLOR_DICTIONARY;
+  const static std::map<const std::string, INT> COLOR_DICTIONARY;
 
   std::string cam_name_;
   CameraParameters camera_parameters_;
   HIDS cam_handle_;
   SENSORINFO cam_sensor_info_;
-  char* cam_buffer_;
+  char * cam_buffer_;
   int cam_buffer_id_;
   INT cam_buffer_pitch_;
   unsigned int cam_buffer_size_;
